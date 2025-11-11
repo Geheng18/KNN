@@ -24,6 +24,7 @@
 #' @param constrain Logical indicating whether to constrain variance components to be non-negative (default is FALSE).
 #'
 #' @return A list containing the p-value of the test.
+#' @export
 KNN.overall.test = function(phenotype, genotype, test.index, input.kernel = NULL,
                             MINQUE.type='MINQUE0', KNN.type='KNN', lambda=0, weight=NULL,
                             fixed.effects=NULL, constrain=FALSE) {
@@ -93,6 +94,7 @@ KNN.overall.test = function(phenotype, genotype, test.index, input.kernel = NULL
 #' @param constrain Logical indicating whether to constrain variance components to be non-negative (default is FALSE).
 #'
 #' @return A list containing the p-value of the test.
+#' @export
 KNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL,
                         MINQUE.type='MINQUE0', KNN.type='KNN', lambda=0, weight=NULL,
                         fixed.effects=NULL, constrain=FALSE) {
@@ -169,6 +171,7 @@ KNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL,
 #'
 #' @return A list containing estimated variance components (`theta`), fixed effects coefficients (`beta`),
 #'         C matrix (`covariance.matrix`), Q matrix (`precision.matrix`), variance component list, and optimal lambda (`lambda.opt`) if CV was performed.
+#' @export
 KNN = function(phenotype, genotype, input.kernel = NULL, MINQUE.type='MINQUE0', KNN.type='KNN',
                lambda=NULL, lambda.list=NULL, weight=NULL, fixed.effects=NULL, constrain=FALSE,
                cv.criteria='COR', variance.component.list=NULL) {
@@ -295,6 +298,7 @@ KNN = function(phenotype, genotype, input.kernel = NULL, MINQUE.type='MINQUE0', 
 #' @param variance.component.list Optional precomputed list of variance components.
 #'
 #' @return The optimal lambda value.
+#' @export
 perform.cv = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type, lambda.list,
                       weight, fixed.effects, constrain, criteria) {
 
@@ -490,7 +494,7 @@ fit.internal = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type
 #' @description
 #' Estimates variance components in a KNN model via numerical optimization,
 #' matching the closed-form KNN by whitening the data before fitting.
-#'
+#' @export
 KNN.numerical = function(phenotype,genotype,input.kernel = NULL,MINQUE.type = 'MINQUE0',
     KNN.type = 'KNN',lambda = NULL,weight = NULL,fixed.effects = NULL,
     alpha = 0,lower.limits = 0,variance.component.list = NULL) {
@@ -575,6 +579,7 @@ KNN.numerical = function(phenotype,genotype,input.kernel = NULL,MINQUE.type = 'M
 #' @param variance.component.list Optional precomputed list of variance components.
 #'
 #' @return Predicted phenotypes for testing subjects.
+#' @export
 KNN.predict = function(phenotype, genotype, theta, input.kernel = NULL, KNN.type='KNN',
                        beta=NULL, fixed.effects.train=NULL, fixed.effects.test=NULL,
                        variance.component.list=NULL) {
@@ -638,6 +643,7 @@ KNN.predict = function(phenotype, genotype, theta, input.kernel = NULL, KNN.type
 #' @param KNN.type Type of KNN model ('KNN', 'LMM').
 #'
 #' @return List of variance component matrices.
+#' @export
 KNN2LMM = function(genotype, input.kernel=NULL, KNN.type='KNN') {
 
   # Get the dimension of KNN
@@ -724,6 +730,7 @@ KNN2LMM = function(genotype, input.kernel=NULL, KNN.type='KNN') {
 #' @param pi.zinb Zero-inflation probability for ZINB (estimated if NULL).
 #'
 #' @return List containing estimated variance components, fixed effects, random effects, and other matrices.
+#' @export
 GKNN = function(phenotype, genotype, input.kernel = NULL, family='binomial', MINQUE.type='MINQUE1',
                 KNN.type='KNN', lambda=NULL, lambda.list=NULL, weight=NULL, beta=NULL,
                 fixed.effects=NULL, constrain=TRUE, cv.criteria='DEVIANCE', thresh=1e-3,
@@ -994,6 +1001,7 @@ GKNN = function(phenotype, genotype, input.kernel = NULL, family='binomial', MIN
 #' @param pi.zinb Zero-inflation probability for ZINB (used if family is 'zinb').
 #'
 #' @return Predicted phenotypes for testing subjects.
+#' @export
 GKNN.predict = function(phenotype, genotype, theta, random.phenotype, covariance.inverse,
                         input.kernel = NULL, family='binomial', KNN.type='KNN', beta=NULL,
                         fixed.effects.train=NULL, fixed.effects.test=NULL,
@@ -1078,7 +1086,7 @@ GKNN.predict = function(phenotype, genotype, theta, random.phenotype, covariance
 #'
 #' @description
 #' Performs cross-validation for lambda selection in GKNN models.
-#'
+#' @export
 perform.gknn.cv = function(phenotype, genotype, input.kernel, family, MINQUE.type, KNN.type,
                            lambda.list, weight, beta, fixed.effects, constrain, criteria,
                            thresh, max.iter, alpha, lower.limits, numerical,
@@ -1425,6 +1433,7 @@ fit.gknn.internal = function(phenotype, genotype, input.kernel, family, MINQUE.t
 #' @param constrain Logical indicating whether to constrain variance components to be non-negative (default FALSE).
 #'
 #' @return A list containing estimated variance components (`theta`), C matrix (`covariance.matrix`), Q matrix (`precision.matrix`), and variance component list.
+#' @export
 KNN.cross = function(phenotype.first, phenotype.second, input.kernel = NULL, variance.component.list,
                      MINQUE.type='MINQUE0', lambda=0, weight=NULL, constrain=FALSE) {
 
@@ -1509,6 +1518,7 @@ KNN.cross = function(phenotype.first, phenotype.second, input.kernel = NULL, var
 #' @param fixed.effects.test Fixed effects design matrix for testing subjects (optional).
 #'
 #' @return Predicted phenotypes for testing subjects as a matrix (N.test x d).
+#' @export
 MVKNN.predict = function(phenotype, genotype, theta, phenotype.covariance, input.kernel = NULL,
                          KNN.type='KNN', beta=NULL, fixed.effects.train=NULL, fixed.effects.test=NULL) {
 
@@ -1604,6 +1614,7 @@ MVKNN.predict = function(phenotype, genotype, theta, phenotype.covariance, input
 #'
 #' @return A list containing estimated variance components (`theta`), phenotype covariance matrix (`phenotype.covariance`),
 #'         fixed effects (`beta`), and other matrices.
+#' @export
 MVKNN = function(phenotype, genotype, input.kernel = NULL, MINQUE.type='MINQUE0', KNN.type='KNN',
                  phenotype.type='Heter', lambda=NULL, lambda.list=NULL, weight=NULL,
                  fixed.effects=NULL, constrain=FALSE, cv.criteria='COR',
@@ -1776,7 +1787,7 @@ MVKNN = function(phenotype, genotype, input.kernel = NULL, MINQUE.type='MINQUE0'
 #'
 #' @description
 #' Performs cross-validation for lambda selection in MVKNN models.
-#'
+#' @export
 perform.mvknn.cv = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type,
                             phenotype.type, lambda.list, weight, fixed.effects, constrain,
                             criteria, thresh, max.iter) {
@@ -2041,6 +2052,7 @@ fit.mvknn.internal = function(phenotype, genotype, input.kernel, MINQUE.type, KN
 #' @param max.iter Maximum number of iterations (default 100).
 #'
 #' @return A list containing the p-value of the test.
+#' @export
 MVKNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL, MINQUE.type='MINQUE0',
                           KNN.type='KNN', phenotype.type='Heter', lambda=0, weight=NULL,
                           fixed.effects=NULL, constrain=TRUE, thresh=1e-5, max.iter=100) {
@@ -2107,6 +2119,7 @@ MVKNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL, 
 #' @param max.iter Maximum number of iterations (default 100).
 #'
 #' @return A list containing the p-value of the test, test mean, and test weights.
+#' @export
 MVKNN.overall.test = function(phenotype, genotype, test.index=NULL, input.kernel = NULL,
                               MINQUE.type='MINQUE0', KNN.type='KNN', phenotype.type='Heter',
                               lambda=0, weight=NULL, fixed.effects=NULL, constrain=TRUE,
