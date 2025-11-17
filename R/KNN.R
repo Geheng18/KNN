@@ -65,7 +65,7 @@ KNN.overall.test = function(phenotype, genotype, test.index, input.kernel = NULL
   eigenvalues = eigen(sigma.total, symmetric=TRUE, only.values=TRUE)$values
 
   # Remove very small eigenvalues for numerical stability
-  eigenvalues = eigenvalues[eigenvalues > 1e-15]
+  # eigenvalues = eigenvalues[eigenvalues > 1e-15]
 
   p.value = tryCatch({
     davies(q = 0, lambda = eigenvalues)$Qq
@@ -133,7 +133,7 @@ KNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL,
   eigenvalues = eigen(sigma.hypothesis, symmetric=TRUE, only.values=TRUE)$values
 
   # Remove very small eigenvalues for numerical stability
-  eigenvalues = eigenvalues[eigenvalues > 1e-15]
+  # eigenvalues = eigenvalues[eigenvalues > 1e-15]
 
   p.value = tryCatch({
     davies(q=theta.full[test.index], lambda=eigenvalues)$Qq
@@ -2092,7 +2092,7 @@ MVKNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL, 
   eigenvalues = eigen(sigma.hypothesis, symmetric=TRUE, only.values=TRUE)$values
 
   # Remove very small eigenvalues for numerical stability
-  eigenvalues = eigenvalues[eigenvalues > 1e-15]
+  # eigenvalues = eigenvalues[eigenvalues > 1e-15]
 
   p.value = tryCatch({
     davies(q=theta.full[test.index], lambda=eigenvalues)$Qq
@@ -2186,7 +2186,7 @@ MVKNN.overall.test = function(phenotype, genotype, test.index=NULL, input.kernel
   eigenvalues = eigen(sigma.hypothesis, symmetric=TRUE, only.values=TRUE)$values
 
   # Remove very small eigenvalues for numerical stability
-  eigenvalues = eigenvalues[eigenvalues > 1e-15]
+  # eigenvalues = eigenvalues[eigenvalues > 1e-15]
 
   p.value = tryCatch({
     davies(q = test.mean, lambda = eigenvalues)$Qq
