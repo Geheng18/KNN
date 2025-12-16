@@ -14,7 +14,8 @@ KNN.overall.test(
   lambda = 0,
   weight = NULL,
   fixed.effects = NULL,
-  constrain = FALSE
+  constrain = FALSE,
+  variance.component.list = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ KNN.overall.test(
 \item{fixed.effects}{Optional fixed effects design matrix.}
 
 \item{constrain}{Logical indicating whether to constrain variance components to be non-negative (default is FALSE).}
+
+\item{variance.component.list}{Optional precomputed list of variance components.}
 }
 \value{
 A list containing the p-value of the test.

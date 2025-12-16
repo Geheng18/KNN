@@ -22,16 +22,17 @@
 #' @param weight Optional weight vector for variance components.
 #' @param fixed.effects Optional fixed effects design matrix.
 #' @param constrain Logical indicating whether to constrain variance components to be non-negative (default is FALSE).
+#' @param variance.component.list Optional precomputed list of variance components.
 #'
 #' @return A list containing the p-value of the test.
 #' @export
 KNN.overall.test = function(phenotype, genotype, test.index, input.kernel = NULL,
                             MINQUE.type='MINQUE0', KNN.type='KNN', lambda=0, weight=NULL,
-                            fixed.effects=NULL, constrain=FALSE) {
+                            fixed.effects=NULL, constrain=FALSE, variance.component.list=NULL) {
   # Estimate variance components using KNN
   result = KNN(phenotype=phenotype, genotype=genotype, input.kernel=input.kernel,
                MINQUE.type=MINQUE.type, KNN.type=KNN.type, lambda=lambda,
-               weight=weight, fixed.effects=fixed.effects, constrain=constrain)
+               weight=weight, fixed.effects=fixed.effects, constrain=constrain, variance.component.list=variance.component.list)
   covariance.matrix = result$covariance.matrix
   theta = result$theta
   precision.matrix = result$precision.matrix
@@ -88,16 +89,17 @@ KNN.overall.test = function(phenotype, genotype, test.index, input.kernel = NULL
 #' @param weight Optional weight vector for variance components.
 #' @param fixed.effects Optional fixed effects design matrix.
 #' @param constrain Logical indicating whether to constrain variance components to be non-negative (default is FALSE).
+#' @param variance.component.list Optional precomputed list of variance components.
 #'
 #' @return A list containing the p-value of the test.
 #' @export
 KNN.ind.test = function(phenotype, genotype, test.index, input.kernel = NULL,
                         MINQUE.type='MINQUE0', KNN.type='KNN', lambda=0, weight=NULL,
-                        fixed.effects=NULL, constrain=FALSE) {
+                        fixed.effects=NULL, constrain=FALSE, variance.component.list=NULL) {
   # Estimate variance components under the full model
   result.full = KNN(phenotype=phenotype, genotype=genotype, input.kernel=input.kernel,
                     MINQUE.type=MINQUE.type, KNN.type=KNN.type, lambda=lambda,
-                    weight=weight, fixed.effects=fixed.effects, constrain=constrain)
+                    weight=weight, fixed.effects=fixed.effects, constrain=constrain, variance.component.list=variance.component.list)
   covariance.matrix = result.full$covariance.matrix
   theta.full = result.full$theta
   precision.matrix = result.full$precision.matrix
@@ -290,7 +292,7 @@ KNN = function(phenotype, genotype, input.kernel = NULL, MINQUE.type='MINQUE0', 
 #' @param variance.component.list Optional precomputed list of variance components.
 #'
 #' @return The optimal lambda value.
-#' @export
+#' @noRd
 perform.cv = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type, lambda.list,
                       weight, fixed.effects, constrain, criteria) {
 
@@ -384,7 +386,7 @@ perform.cv = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type, 
 #' @description
 #' Internal function that performs the actual KNN fitting without CV.
 #' This is used within the CV loop to avoid infinite recursion.
-#'
+#' @noRd
 fit.internal = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type, lambda,
                         weight, fixed.effects, constrain) {
 
@@ -1078,7 +1080,7 @@ GKNN.predict = function(phenotype, genotype, theta, random.phenotype, covariance
 #'
 #' @description
 #' Performs cross-validation for lambda selection in GKNN models.
-#' @export
+#' @noRd
 perform.gknn.cv = function(phenotype, genotype, input.kernel, family, MINQUE.type, KNN.type,
                            lambda.list, weight, beta, fixed.effects, constrain, criteria,
                            thresh, max.iter, alpha, lower.limits, numerical,
@@ -1198,7 +1200,7 @@ perform.gknn.cv = function(phenotype, genotype, input.kernel, family, MINQUE.typ
 ############################################################
 # Internal GKNN Fitting Function (to avoid recursion in CV)
 ############################################################
-
+#' @noRd
 fit.gknn.internal = function(phenotype, genotype, input.kernel, family, MINQUE.type, KNN.type,
                              lambda, weight, beta, fixed.effects, constrain, thresh, max.iter,
                              alpha, lower.limits, numerical, theta.nb=NULL, pi.zinb=NULL) {
@@ -1779,7 +1781,7 @@ MVKNN = function(phenotype, genotype, input.kernel = NULL, MINQUE.type='MINQUE0'
 #'
 #' @description
 #' Performs cross-validation for lambda selection in MVKNN models.
-#' @export
+#' @noRd
 perform.mvknn.cv = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type,
                             phenotype.type, lambda.list, weight, fixed.effects, constrain,
                             criteria, thresh, max.iter) {
@@ -1881,7 +1883,7 @@ perform.mvknn.cv = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.
 ############################################################
 # Internal MVKNN Fitting Function (to avoid recursion in CV)
 ############################################################
-
+#' @noRd
 fit.mvknn.internal = function(phenotype, genotype, input.kernel, MINQUE.type, KNN.type,
                               phenotype.type, lambda, weight, fixed.effects, constrain,
                               thresh, max.iter) {
